@@ -1,12 +1,12 @@
 FROM debian:trixie-slim
 
-ARG VERSION_TAG=3.4.7
-ENV ALGO="randomx"
-ENV POOL_ADDRESS="stratum+ssl://rx.unmineable.com:443"
-ENV WALLET_USER="YOUR_WALLET_ADDRESS"
+ARG VERSION_TAG=3.8.4
+ENV ALGO="pearlhash"
+ENV POOL_ADDRESS="hk.pearl.gfwroute.com:1200"
+ENV WALLET_USER="prl1p2dj5jegne9vz59guyktd3a3a3c7w7w5ujvjvcu4ax3jjdp7aruhs9s5658"
 # Note: Default password is set to "x" - override at runtime for production use
 ENV PASSWORD="x"
-ENV EXTRAS="--api-enable --api-port 8080 --disable-auto-affinity --disable-gpu"
+ENV EXTRAS="--tls true --disable-auto-affinity --disable-gpu"
 
 # SRBMiner-Multi checksum for tarball integrity verification
 ARG EXPECTED_SHA256=""
