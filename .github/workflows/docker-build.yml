@@ -42,13 +42,13 @@ jobs:
           echo "Extracted version: $VERSION"
 
       - name: Validate image --version
-        run: docker run --rm "docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }}" --version
+        run: docker run --rm "docker.io/haig233/srbminer-multi:${{ steps.get_version.outputs.version }}" --version
 
       - name: Validate image via entrypoint bypass
-        run: docker run --rm --entrypoint="" "docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }}" ./SRBMiner-MULTI --version
+        run: docker run --rm --entrypoint="" "docker.io/haig233/srbminer-multi:${{ steps.get_version.outputs.version }}" ./SRBMiner-MULTI --version
 
       - name: Run security-check.sh
-        run: ./security-check.sh "docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }}"
+        run: ./security-check.sh "docker.io/haig233/srbminer-multi:${{ steps.get_version.outputs.version }}"
 
   docker:
     name: Push images
@@ -89,19 +89,19 @@ jobs:
 
       - name: Validate image before push
         run: |
-          docker run --rm "docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }}" --version
-          docker run --rm --entrypoint="" "docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }}" ./SRBMiner-MULTI --version
+          docker run --rm "docker.io/haig233/srbminer-multi:${{ steps.get_version.outputs.version }}" --version
+          docker run --rm --entrypoint="" "docker.io/haig233/srbminer-multi:${{ steps.get_version.outputs.version }}" ./SRBMiner-MULTI --version
 
       - name: Run security-check.sh
         run: |
           chmod +x ./security-check.sh
-          ./security-check.sh "docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }}"
+          ./security-check.sh "docker.io/haig233/srbminer-multi:${{ steps.get_version.outputs.version }}"
 
       - name: Tag Docker image with latest, version, and commit SHA
         run: |
           # Tag for Docker Hub
-          docker tag docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }} docker.io/cniweb/srbminer-multi:latest
-          docker tag docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }} docker.io/cniweb/srbminer-multi:${{ github.sha }}
+          docker tag docker.io/haig233/srbminer-multi:${{ steps.get_version.outputs.version }} docker.io/haig233/srbminer-multi:latest
+          docker tag docker.io/haig233/srbminer-multi:${{ steps.get_version.outputs.version }} docker.io/haig233/srbminer-multi:${{ github.sha }}
 
           # Tag for GitHub Container Registry
           docker tag docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }} ghcr.io/cniweb/srbminer-multi:latest
@@ -113,9 +113,9 @@ jobs:
         id: push
         run: |
           # Push to Docker Hub
-          docker push docker.io/cniweb/srbminer-multi:latest
-          docker push docker.io/cniweb/srbminer-multi:${{ steps.get_version.outputs.version }}
-          docker push docker.io/cniweb/srbminer-multi:${{ github.sha }}
+          docker push docker.io/haig233/srbminer-multi:latest
+          docker push docker.io/haig233/srbminer-multi:${{ steps.get_version.outputs.version }}
+          docker push docker.io/haig233/srbminer-multi:${{ github.sha }}
 
           # Push to GitHub Container Registry
           docker push ghcr.io/cniweb/srbminer-multi:latest
@@ -172,7 +172,7 @@ jobs:
             const previous = releases.find(r => !r.draft && !r.prerelease && r.tag_name !== tag);
 
             let name = `SRBMiner-Multi Docker v${version}`;
-            let body = `## SRBMiner-Multi Docker Image v${version}\n\nDocker images successfully built and pushed to:\n- Docker Hub: \`docker.io/cniweb/srbminer-multi:${version}\`\n- GitHub Container Registry: \`ghcr.io/cniweb/srbminer-multi:${version}\`\n\n### Usage\n\`\`\`bash\ndocker pull cniweb/srbminer-multi:${version}\n\`\`\`\n\nBased on [SRBMiner-Multi ${version}](https://github.com/doktor83/SRBMiner-Multi/releases/tag/${version})`;
+            let body = `## SRBMiner-Multi Docker Image v${version}\n\nDocker images successfully built and pushed to:\n- Docker Hub: \`docker.io/haig233/srbminer-multi:${version}\`\n- GitHub Container Registry: \`ghcr.io/cniweb/srbminer-multi:${version}\`\n\n### Usage\n\`\`\`bash\ndocker pull cniweb/srbminer-multi:${version}\n\`\`\`\n\nBased on [SRBMiner-Multi ${version}](https://github.com/doktor83/SRBMiner-Multi/releases/tag/${version})`;
 
             if (previous) {
               const oldTag = previous.tag_name || "";
